@@ -1,4 +1,4 @@
-# link: [two-city-scheduling](https://leetcode.com/problems/two-city-scheduling/)
+# [two-city-scheduling](https://leetcode.com/problems/two-city-scheduling/)
 ## Thoughts:
        Need to find minimum, find optimal solution. 
 ## methods: 
@@ -41,4 +41,4 @@
                return dp[size][n]; 
 
            }
-#
+# new problem 
