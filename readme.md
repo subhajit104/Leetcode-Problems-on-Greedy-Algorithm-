@@ -41,4 +41,21 @@
                return dp[size][n]; 
 
            }
-# new problem 
+
+## greedy approach:  
+    1. Candidates should visit city A if fare is less compare to B.  
+    2. But also need to take care of higher difference  fare cost. 
+    3. ow much money can we save if we fly a person to A vs. B? To
+        minimize the total cost, we should fly the 
+        person with the maximum saving to A,   and with the minimum - to B
+
+## pseudo-code: 
+      int twoCitySchedCost(vector<vector<int>>& cs, int res = 0) {
+      sort(begin(cs), end(cs), [](vector<int> &v_1, vector<int> &v_2) {
+        return (v_1[0] - v_1[1] < v_2[0] - v_2[1]);
+      });
+      for (auto i = 0; i < cs.size() / 2; ++i) {
+        res += cs[i][0] + cs[i + cs.size() / 2][1];
+      }
+      return res;
+      }
