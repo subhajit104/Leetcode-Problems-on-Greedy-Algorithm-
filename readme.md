@@ -5,15 +5,12 @@
        1. Dynamic Programing. 
        2. Greedy Algorithm 
        3. Binary Search 
-# Dynamic Programming:
-  ## finding states for recursion:
-  1.  Need to select n candidates from city A effectively so that 
-     Overall traveling cost should be minimized.
-  2. Mathematical recursion : 
-     F(i,n) = min(COSTA(i) + F(i-1,n-1), COSTB(i) + F(i-1,n) 
-
-# Pseudo-code:
-  
+## Dynamic Programming:
+         1. Need to select n candidates from city A effectively so that 
+            Overall traveling cost should be minimized.
+         2. Mathematical recursion : 
+            F(i,n) = min(COSTA(i) + F(i-1,n-1), COSTB(i) + F(i-1,n) 
+## Pseudo-code:
     int twoCitySchedCost(vector<vector<int>>& costs) {
         
         
