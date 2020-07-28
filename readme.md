@@ -1,4 +1,4 @@
-# link: https://leetcode.com/problems/two-city-scheduling/:
+# link: https://leetcode.com/problems/two-city-scheduling/
 ## Thoughts:
        Need to find minimum, find optimal solution. 
 ## methods: 
