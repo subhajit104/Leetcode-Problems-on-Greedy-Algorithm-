@@ -145,140 +145,123 @@
      2. Build a segment tree based on the child empty nodes for range query.
          
 ## Pseudo-code:
-    #define see(x) cout << #x << " " << x << endl; 
-#define ll long
-int n; 
 
- struct SEG 
-{ 
-  
-  int size;
-  vector<ll>tree;
+        #define see(x) cout << #x << " " << x << endl; 
+        #define ll long
+        int n; 
 
-  SEG( ){ };
+         struct SEG 
+        { 
+          
+          int size;
+          vector<ll>tree;
+          SEG( ){ };
+          SEG(int N) {
+                
+                cout << " started Build" << endl; 
+          	    size = N ; 
+                tree.resize(N+5,0);    
+                build(1,0,n-1);
+                cout << " build success " << endl; 
+           }
+          
+          ll calculate(int left, int right)
+          {
+          	 return left + right; 
+          }
+          
+          void build(int node, int start, int end) 
+          {
+            if(start == end){
+                
+                tree[node] = 1;
+                return;
+                
+            }
 
-  SEG(int N) {
-        
-        cout << " started Build" << endl; 
-  	    size = N ; 
-        tree.resize(N+5,0);    
-        build(1,0,n-1);
-        cout << " build success " << endl; 
-   }
-  
-  ll calculate(int left, int right)
-  {
-  	 return left + right; 
-  }
-  
+            ll mid = (start+end) >> 1;
+              
+            build(2*node, start , mid);
+            build(2*node+1,mid+1,end);
+            ll lcm1 = tree[2*node];
+            ll lcm2 = tree[2*node+1];
+            tree[node] = calculate(lcm1,lcm2);
+              
+          }
 
-  void build(int node, int start, int end) 
-  {
-    if(start == end){
-        
-        tree[node] = 1;
-        return;
-        
-    }
-
-    ll mid = (start+end) >> 1;
-      
-    build(2*node, start , mid);
-    build(2*node+1,mid+1,end);
-
-    ll lcm1 = tree[2*node];
-    ll lcm2 = tree[2*node+1];
-
-    tree[node] = calculate(lcm1,lcm2);
-      
-  }
-
-  // index of the i'th empty position. 
-  ll query(int node, int start, int end, int place){ 
-  
-    //perfect overlap case.
-    if( start == end )
-      return start;
-
-    int mid = (start+end) >> 1 ;
-
-    ll left = tree[2*node];
-
-    if( left >= place )
-    {
-        return query(2*node,start,mid,place);
-    }
-    else
-    {
-    	return query(2*node+1,mid+1,end,place-left);
-    }
-    
-  }
-
-  void update(int node, int start, int end, int index){
-
-    if(start == end){
-      tree[node] = 0;
-      return;
-    }
-
-    ll mid = (start+end) >> 1;
-      
-    if(index <= mid)
-       update(2*node, start, mid, index);
-    else
-       update(2*node+1, mid+1, end, index);
-
-    ll lcm1 = tree[2*node];
-    ll lcm2 = tree[2*node+1];
-
-    tree[node] = calculate(lcm1,lcm2);
-
-  }
-
-};
-class Solution {
-public:
-    vector<vector<int>> reconstructQueue(vector<vector<int>>& p) {
-        
-        // sort the vector by smallest number and smallest position first.
-        sort(begin(p),end(p),[]( const auto& a, const auto& b )
-             {
-                 return ( a[0] < b[0] ) ? true : (a[0] == b[0] and a[1] > b[1]) ; 
-             });
-        
-        n = p.size();
-        vector< vector<int> > res (n); 
-         
-        if( n == 0 ) return res; 
-        
-        // cout << " all okay " << endl; 
-        
-        SEG segemntTree(4*n);
-        
-        // cout << " total_size " <<  segemntTree.tree[1] << endl; 
-        
-        for(auto vec: p)
-        {   
+          // index of the i'th empty position. 
+          ll query(int node, int start, int end, int place){ 
+          
+            //perfect overlap case.
+            if( start == end )
+              return start;
+            int mid = (start+end) >> 1 ;
+            ll left = tree[2*node];
+            if( left >= place )
+            {
+                return query(2*node,start,mid,place);
+            }
+            else
+            {
+            	return query(2*node+1,mid+1,end,place-left);
+            }
             
-        	int height = vec[0];
-        	int position = vec[1] + 1 ;
-            int index = segemntTree.query(1,0,n-1,position);
-            see(height);
-            see(position);
-            see(index);
-            segemntTree.update(1,0,n-1,index); 
-            // cout << " total_size " <<  segemntTree.tree[1] << endl; 
-            cout << endl ;
-        	res[index] = vec;
+          }
 
+          void update(int node, int start, int end, int index){
+            if(start == end){
+              tree[node] = 0;
+              return;
+            }
+            ll mid = (start+end) >> 1;
+              
+            if(index <= mid)
+               update(2*node, start, mid, index);
+            else
+               update(2*node+1, mid+1, end, index);
+            ll lcm1 = tree[2*node];
+            ll lcm2 = tr
+          }
         }
 
-
-       return res; 
-
-    }
-};
+        class Solution {
+        public:
+            vector<vector<int>> reconstructQueue(vector<vector<int>>& p) {
+                
+                // sort the vector by smallest number and smallest position first.
+                sort(begin(p),end(p),[]( const auto& a, const auto& b )
+                     {
+                         return ( a[0] < b[0] ) ? true : (a[0] == b[0] and a[1] > b[1]) ; 
+                     });
+                
+                n = p.size();
+                vector< vector<int> > res (n); 
+                 
+                if( n == 0 ) return res; 
+                
+                // cout << " all okay " << endl; 
+                
+                SEG segemntTree(4*n);
+                
+                // cout << " total_size " <<  segemntTree.tree[1] << endl; 
+                
+                for(auto vec: p)
+                {   
+                    
+                	int height = vec[0];
+                	int position = vec[1] + 1 ;
+                    int index = segemntTree.query(1,0,n-1,position);
+                    see(height);
+                    see(position);
+                    see(index);
+                    segemntTree.update(1,0,n-1,index); 
+                    // cout << " total_size " <<  segemntTree.tree[1] << endl; 
+                    cout << endl ;
+                	res[index] = vec;
+                }
+               return res; 
+            }
+        };
 
 
 
